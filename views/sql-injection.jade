@@ -1,0 +1,33 @@
+html
+    head
+        title Injection SQL
+        style.
+            table { border-collapse: collapse; margin: 1ex; }
+            td, th { border: solid thin black; padding: 1ex; }
+    body
+        table
+            tr
+                th Login
+                th Password
+            each u in users
+                tr
+                    td= u.login
+                    td= u.password
+        form(method='get' action='login')
+            input#usr(type='text', name='user' placeholder='login')
+            input#pwd(type='text', name='pwd' placeholder='mot de passe')
+            input(type='submit', value='Envoyer')
+            input(type='submit', value='Envoyer (safe)', formaction='login-safe')
+        p
+            input#jsfilter(type='checkbox')
+            | Activer la protection JavaScript
+        script.
+            var $ = document.querySelector.bind(document);
+            $('form').addEventListener('submit', function(e) {
+                if ($('#jsfilter').checked
+                    && ($('#usr').value.match(/['";]/)
+                        || $('#pwd').value.match(/['";]/))) {
+                    alert("Nom d'utilisateur ou mot de passe invalides.");
+                    e.preventDefault();
+                }
+            });
