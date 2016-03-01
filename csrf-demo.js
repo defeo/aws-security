@@ -8,8 +8,9 @@ var app = express();
 
 var store = new session.MemoryStore();
 /* On utilise une variable globale en guise de base de données, pour
- * simplifier le code. */
-var users = {};
+ * simplifier le code.
+ * On crée un compte par défaut pour faciliter la démo. */
+var users = { hacker : { name: 'hacker', pwd: 'pwn3d', credit: 1000, } };
 
 app.use(bodyP.urlencoded({ extended: false }))
     .use(session({
@@ -29,7 +30,7 @@ app.use(bodyP.urlencoded({ extended: false }))
 	var mem = process.memoryUsage();
 	if (mem.heapUsed > 5e8) {
 	    store.clear();
-	    users = {};
+	    users = { hacker : { name: 'hacker', pwd: 'pwn3d', credit: 1000, } };
 	}
 	next();
     })
