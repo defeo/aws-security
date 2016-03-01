@@ -1,0 +1,32 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title Démo CSRF
+    style.
+      * { text-align: center }
+    // Recharger la page lorsque le serveur 
+    script.
+      (new EventSource('evts')).addEventListener('post', function() {
+      console.log('post');
+        window.location.reload();
+      });
+  body
+    if user
+      h1 Bonjour #{user.name}
+      p Vous avez #{user.credit}€ sur votre compte
+      form(action='transfer#{confirm ? "-w-confirm" : ""}' method='post')
+        p
+          | Transférer #[input(type='number' name='amount' step='10' autofocus)]€ à 
+          select(name='to')
+            for u in users
+              if u.name != user.name
+                option(value='#{u.name}') #{u.name}
+          input(type='submit' value='ok')
+    else
+      h1 Bonjour
+      p Veuillez vous connecter ou créer un compte.
+      form(method='post')
+        input(type='text' name='username' placeholder='login' autofocus)
+        input(type='password' name='pwd' placeholder='mot de passe')
+        input(type='submit' value='ok')

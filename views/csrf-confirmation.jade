@@ -1,0 +1,23 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title Confirmation
+    style.
+      * { text-align: center }
+      a, input {
+        font-size: 200%;
+        margin: 0 2ex;
+        cursor: pointer;
+      }
+  body
+    h1 Transfert
+    p Êtes-vous sûr de vouloir transférer #{amount}€ à #{to.name} ?
+    form(method='post')
+      input(type='hidden' name='to' value='#{to.name}')
+      input(type='hidden' name='amount' value='#{amount}')
+      input(type='hidden' name='nonce' value='#{nonce}')
+      a(href='.') Non
+      span 
+      input(type='submit' value='Oui')
+      
