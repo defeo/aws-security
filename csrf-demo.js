@@ -63,7 +63,7 @@ app.all('/', function(req, res) {
 	    req.session.username = username;
 	    res.redirect('/');
 	} else if (user.pwd == req.body.pwd) {
-	    req.session.username = username;
+	    req.session.username = user.name;
 	    res.redirect('/');
 	} else {
 	    res.status(401).send('Unauthorized');
@@ -80,7 +80,7 @@ app.all('/', function(req, res) {
  * compte destinataire. */
 app.post('/transfer', function(req, res) {
     if (req.session.username) {
-	from = users[req.session.username];
+	var from = users[req.session.username];
 	var to = users[req.body.to];
 	var amount = parseInt(req.body.amount);
 	if (to && amount > 0 && amount < from.credit) {
@@ -99,7 +99,7 @@ app.post('/transfer', function(req, res) {
  * avec un nonce avant d'opérer le transfert. */
 app.post('/transfer-w-confirm', function(req, res) {
     if (req.session.username) {
-	from = users[req.session.username];
+	var from = users[req.session.username];
 	var to = users[req.body.to];
 	var amount = parseInt(req.body.amount);
 	if (to && amount > 0 && amount < from.credit) {
