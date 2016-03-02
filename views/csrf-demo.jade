@@ -6,11 +6,12 @@ html
     style.
       * { text-align: center }
     // Recharger la page lorsque le serveur 
-    script.
-      (new EventSource('evts')).addEventListener('post', function() {
-      console.log('post');
-        window.location.reload();
-      });
+    if user
+      script.
+        (new EventSource('evts')).addEventListener('post', function() {
+        console.log('post');
+          window.location.reload();
+        });
   body
     if user
       h1 Bonjour #{user.name}

@@ -124,7 +124,10 @@ app.post('/transfer-w-confirm', function(req, res) {
 var events = new evt.EventEmitter();
 app.get('/evts', function(req, res) {
     var client = sse(res, { padding: false });
-    var cb = function() { client.sendEvent('post', ''); }
+    var cb = function() {
+	// Retarder pour éviter des race conditions dans Chrome
+	setTimeout(function() { client.sendEvent('post', ''); }, 200);
+    };
     events.on('post', cb);
     client.disconnect(function () {
 	events.removeListener('post', cb);
