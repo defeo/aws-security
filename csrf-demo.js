@@ -107,7 +107,7 @@ app.post('/transfer-w-confirm', function(req, res) {
 		req.body.nonce == req.session.nonce) {
 		to.credit += amount;
 		from.credit -= amount;
-		res.redirect('/');
+		res.redirect('/?confirm');
 	    } else {
 		var nonce = req.session.nonce = crypto.randomBytes(16).toString('base64');
 		res.render('csrf-confirmation.jade', { nonce: nonce, to: to, amount: amount });
